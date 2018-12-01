@@ -27,7 +27,22 @@ Modules :
 - API: REST / graphql, sangria
 - tests: scalatest, scalacheck
 - metrics: prometheus
-- build: sbt / mill, coursier, sbt-buildinfo, sbt-updates, splain, sbt-dependency-graph, sbt-revolver
+- build: sbt / mill, coursier, sbt-buildinfo, sbt-updates, splain, sbt-dependency-graph, sbt-revolver, sbt-microsites
 - code quality: scoverage, scalafmt, scalastyle, wartremover
 - service: github, codacy
 - doc: tut, swagger
+
+## Use it
+
+### Running the web-http4s module
+
+Launch the class `com.sample.web.Launcher`, it will start the webserver
+
+You can also use the `sbt-revolver` plugin for hot reload, for that :
+- start sbt shell: `sbt`
+- select webHttp4s project: `project webHttp4s`
+- launch reStart with recompilation: `~reStart`
+
+To exit :
+- press Enter to exit the recompilation mode
+- run `reStop` to stop the server
