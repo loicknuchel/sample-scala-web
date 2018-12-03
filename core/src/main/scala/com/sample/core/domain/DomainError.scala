@@ -5,11 +5,11 @@ import cats.implicits._
 
 import scala.util.matching.Regex
 
-sealed trait Error {
+sealed trait DomainError {
   def format: String
 }
 
-sealed trait ValidationError extends Error {
+sealed trait ValidationError extends DomainError {
   val ref: String
   val original: String
 }

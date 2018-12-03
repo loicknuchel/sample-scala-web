@@ -38,7 +38,8 @@ val circe = Seq(
   "io.circe" %% "circe-literal",
   "io.circe" %% "circe-java8").map(_ % "0.10.1")
 val cats = Seq(
-  "org.typelevel" %% "cats-core" % "1.4.0")
+  "org.typelevel" %% "cats-core" % "1.4.0",
+  "org.typelevel" %% "cats-effect" % "0.10.1")
 val logback = Seq(
   "org.slf4j" % "slf4j-api" % "1.7.25",
   "ch.qos.logback" % "logback-classic" % "1.2.3")
@@ -55,7 +56,7 @@ val scalaCheck = Seq(
 val scalautilsDependencies = cats ++ scalaTest
 val coreDependencies = cats ++ scalaTest
 val infraDependencies = doobie ++ circe ++ flyway ++ scalaTest ++ scalaCheck ++ doobieTest
-val webHttp4sDependencies = http4s ++ webjars ++ logback ++ scalaTest
+val webHttp4sDependencies = http4s ++ webjars ++ logback ++ scalaTest ++ scalaCheck
 val webPlay2Dependencies = scalaTest
 
 /**

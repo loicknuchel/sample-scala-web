@@ -6,12 +6,13 @@ import cats.data.NonEmptyList
 import com.sample.core.domain._
 import com.sample.lib.scalautils.Extensions._
 import org.scalacheck.Arbitrary._
-import org.scalacheck.{Arbitrary, Gen}
 import org.scalacheck.ScalacheckShapeless._
+import org.scalacheck.{Arbitrary, Gen}
 
 import scala.language.implicitConversions
 
 object Generators {
+  private val _ = coproductCogen // to keep the `org.scalacheck.ScalacheckShapeless._` import
   private implicit def gen[A](a: Arbitrary[A]): Gen[A] = a.arbitrary
 
   implicit def aNonEmptyList[A](g: Gen[A]) = Arbitrary(Gen.nonEmptyListOf(g).map(NonEmptyList.fromListUnsafe))

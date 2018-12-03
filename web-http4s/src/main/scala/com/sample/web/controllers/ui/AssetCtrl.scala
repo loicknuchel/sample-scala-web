@@ -1,4 +1,4 @@
-package com.sample.web.controllers
+package com.sample.web.controllers.ui
 
 import cats.effect.Effect
 import org.http4s.HttpService

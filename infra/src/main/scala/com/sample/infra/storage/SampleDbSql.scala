@@ -8,7 +8,7 @@ import com.sample.infra.utils.DoobieUtils
 import doobie.implicits._
 import org.flywaydb.core.Flyway
 
-class SampleDbSql(conf: DbConf) extends SampleDb {
+class SampleDbSql(conf: DbConf) extends SampleDb[IO] {
   private val flyway = flywayBuilder(conf)
   private[storage] val xa = DoobieUtils.transactor(conf)
 

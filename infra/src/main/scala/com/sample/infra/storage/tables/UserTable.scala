@@ -7,6 +7,7 @@ import doobie.Fragment
 import doobie.implicits._
 
 object UserTable {
+  private val _ = userIdMeta // to keep the `com.sample.infra.utils.DoobieUtils.Mappings._` import
   val table = "users"
   val fields = Seq("id", "first_name", "last_name", "email", "created")
 

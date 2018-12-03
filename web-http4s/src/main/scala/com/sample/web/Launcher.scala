@@ -3,7 +3,9 @@ package com.sample.web
 import java.time.Instant
 
 import cats.effect.{Effect, IO}
-import com.sample.web.controllers.{AssetCtrl, HealthCtrl, HomeCtrl}
+import com.sample.infra.storage.{DbConf, H2, SampleDbSql}
+import com.sample.web.controllers.api.{HealthCtrl, UserCtrl}
+import com.sample.web.controllers.ui.{AssetCtrl, HomeCtrl}
 import fs2.StreamApp
 import org.http4s.HttpService
 import org.http4s.server.blaze.BlazeBuilder
@@ -19,9 +21,15 @@ object Launcher {
     import scala.concurrent.ExecutionContext.Implicits.global
     logger.info("Launching webserver (http4s)")
     val started = Instant.now()
-    val version = "app version" // FIXME should get version
+    // TODO get conf from application.conf
+    val version = "app version" // FIXME should get version from build
+    //val dbConf: DbConf = PostgreSQL("jdbc:postgresql:world", "l.knuchel", "l.knuchel")
+    val dbConf: DbConf = H2("org.postgresql.Driver", "jdbc:h2:mem:sample_db;MODE=PostgreSQL;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1")
+    val db = new SampleDbSql(dbConf)
+    db.createTables().unsafeRunSync()
     val app = buildApp(8888)(
       "/" -> new HomeCtrl[IO].service,
+      "/api/users" -> new UserCtrl[IO](db).service,
       "/api/status" -> new HealthCtrl[IO](version, started).service,
       "/assets" -> new AssetCtrl[IO].service)
     app.main(args)
