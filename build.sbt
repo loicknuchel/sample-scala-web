@@ -90,7 +90,7 @@ val infra = (project in file("infra"))
 
 val webHttp4s = (project in file("web-http4s"))
   .dependsOn(core, infra)
-  .enablePlugins(JavaAppPackaging)
+  .enablePlugins(SbtTwirl, JavaAppPackaging)
   .settings(
     name := "web-http4s",
     libraryDependencies ++= webHttp4sDependencies,

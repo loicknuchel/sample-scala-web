@@ -1,0 +1,35 @@
+@import com.sample.web.Routes
+
+@(title: String = "")(body: Html)
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="@Routes.asset("bootstrap/4.1.3/dist/css/bootstrap.min.css")">
+        <script src="@Routes.asset("jquery/3.3.1/dist/jquery.slim.min.js")"></script>
+        <script src="@Routes.asset("bootstrap/4.1.3/dist/js/bootstrap.bundle.min.js")"></script>
+        <title>@(if(title.isEmpty) "Sample" else s"$title - Sample")</title>
+    </head>
+    <body>
+    @body
+    </body>
+    <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip(); // activate tooltips
+                $('[data-toggle="popover"]').popover(); // activate popovers
+
+                // disable input inside hidden tabs
+                $('.tab-pane:not(.show)').find('input, textarea, select').attr('disabled', true);
+
+                // enable input inside shown tab
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                    $(e.target.getAttribute('href')).find('input, textarea, select').attr('disabled', false);
+                    if (e.relatedTarget) {
+                        $(e.relatedTarget.getAttribute('href')).find('input, textarea, select').attr('disabled', true);
+                    }
+                });
+            })
+    </script>
+</html>

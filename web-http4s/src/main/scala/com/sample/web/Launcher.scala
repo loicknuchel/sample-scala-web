@@ -4,8 +4,7 @@ import java.time.Instant
 
 import cats.effect.{Effect, IO}
 import com.sample.infra.storage.{DbConf, H2, SampleDbSql}
-import com.sample.web.controllers.api.{HealthCtrl, UserCtrl}
-import com.sample.web.controllers.ui.{AssetCtrl, HomeCtrl}
+import com.sample.web.controllers.{api, ui}
 import fs2.StreamApp
 import org.http4s.HttpService
 import org.http4s.server.blaze.BlazeBuilder
@@ -28,10 +27,11 @@ object Launcher {
     val db = new SampleDbSql(dbConf)
     db.createTables().unsafeRunSync()
     val app = buildApp(8888)(
-      "/" -> new HomeCtrl[IO].service,
-      "/api/users" -> new UserCtrl[IO](db).service,
-      "/api/status" -> new HealthCtrl[IO](version, started).service,
-      "/assets" -> new AssetCtrl[IO].service)
+      Routes.home -> new ui.HomeCtrl[IO].service,
+      Routes.users -> new ui.UserCtrl[IO](db).service,
+      "/api/users" -> new api.UserCtrl[IO](db).service,
+      "/api/status" -> new api.HealthCtrl[IO](version, started).service,
+      Routes.assets -> new ui.AssetCtrl[IO].service)
     app.main(args)
   }
 
@@ -44,4 +44,14 @@ object Launcher {
           .serve
       }
     }
+}
+
+object Routes {
+  def home: String = "/"
+
+  def users: String = "/users"
+
+  def assets: String = "/assets"
+
+  def asset(path: String): String = s"$assets/$path"
 }

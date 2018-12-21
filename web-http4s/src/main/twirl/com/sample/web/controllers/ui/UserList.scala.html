@@ -1,0 +1,14 @@
+@import com.sample.core.domain.BasicUser
+@import com.sample.web.controllers.ui.partials.html._
+@import com.sample.web.domain.NoAuthRequest
+
+@(users: Seq[BasicUser])(implicit req: NoAuthRequest)
+@main("Home") {
+    @header()
+    <h1>Users 2</h1>
+    <ul>
+    @users.map { user =>
+        <li>@user.email</li>
+    }
+    </ul>
+}
